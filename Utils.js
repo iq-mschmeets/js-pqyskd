@@ -17,7 +17,6 @@ const sanitizeMessage = getSet(
   msg => msg.replace(/</g, '&lt;')
 );
 
-
 const Task = (run) => {
   map: (f) => Task((resolve, reject) => {
     run(
@@ -32,7 +31,11 @@ const Task = (run) => {
     )
   }),
   run: (onResolve, onReject) => run(
-    onResolve,
-    onReject
-  );
+      onResolve,
+      onReject
+    );
+  scan: (f, x0) => Task((resolve, reject) => run(
+    x => resolve(f(x0, x)),
+    e => resolve(x0),
+  )),
 }
