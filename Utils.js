@@ -39,3 +39,6 @@ const Task = (run) => {
     e => resolve(x0),
   )),
 }
+
+const scan = (f, x0) => (scannable) =>
+  scannable.scan(f, x0);
