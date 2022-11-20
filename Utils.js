@@ -16,3 +16,23 @@ const sanitizeMessage = getSet(
   'message',
   msg => msg.replace(/</g, '&lt;')
 );
+
+
+const Task = (run) => {
+  map: (f) => Task((resolve, reject) => {
+    run(
+      (x) => (resolve(f(x))),
+      reject
+    );
+  }),
+  peekErr: (f) => Task((resolve, reject) => {
+    run(
+      resolve,
+      (err) => { f(err); reject(err); }
+    )
+  }),
+  run: (onResolve, onReject) => run(
+    onResolve,
+    onReject
+  );
+}
